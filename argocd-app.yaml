@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nestjs-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/your-org/your-repo.git'
+    targetRevision: main
+    path: nestjs-tekton/k8s
+  destination:

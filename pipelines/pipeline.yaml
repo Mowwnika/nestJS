@@ -1,0 +1,14 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: nestjs-build-deploy-pipeline
+spec:
+  workspaces:
+    - name: shared-workspace
+  tasks:
+    - name: build-and-push
+      taskRef:
+        name: buildah
+  params:
+    - name: image 
+      value: nestjs_kubernetes:2
