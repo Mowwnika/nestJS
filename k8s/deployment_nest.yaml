@@ -20,16 +20,28 @@ spec:
         image: nestjs_kubernetes:2
         imagePullPolicy: IfNotPresent
         env: 
+
         - name: NODE_ENV
-          value: "production"
+          valueFrom:
+            configMapKeyRef:
+              name: nestjs-config # Name of your ConfigMap
+              key: NODE_ENV # Key from the ConfigMap
         - name: environmentVar
-          value: "production"
+          valueFrom:
+            configMapKeyRef:
+              name: nestjs-config # Name of your ConfigMap
+              key: environmentVar # Key from the ConfigMap
         - name: label
-          value: "prodInstance"
-        - name: PORT
-          value: "5000"
+          valueFrom:
+            configMapKeyRef:
+              name: nestjs-config # Name of your ConfigMap
+              key: label # Key from the ConfigMap
+        - name: port
+          valueFrom:
+            configMapKeyRef:
+              name: nestjs-config # Name of your ConfigMap
+              key: port  # Key from the ConfigMap
         ports:
         - containerPort: 5000
-        envFrom:
-        - configMapRef:
-            name: nestjs-config
+        
+            
