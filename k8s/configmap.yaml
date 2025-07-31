@@ -8,7 +8,7 @@ data:
   NODE_ENV: "production"
   environmentVar: "prod"
   label: "production"
-  port: "5000"
+  PORT: "5000"
 
 
   

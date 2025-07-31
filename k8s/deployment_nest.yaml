@@ -36,11 +36,11 @@ spec:
             configMapKeyRef:
               name: nestjs-config # Name of your ConfigMap
               key: label # Key from the ConfigMap
-        - name: port
+        - name: PORT
           valueFrom:
             configMapKeyRef:
               name: nestjs-config # Name of your ConfigMap
-              key: port  # Key from the ConfigMap
+              key: PORT  # Key from the ConfigMap
         ports:
         - containerPort: 5000
         
