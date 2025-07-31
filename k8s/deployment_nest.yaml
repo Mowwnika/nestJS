@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nest-js-deployment
+  namespace: nestjs
   labels:
     app: nest-js
 spec:
