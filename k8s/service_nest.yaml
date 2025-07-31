@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nest-app-service
+  name: nest-service
   namespace: nestjs
 spec:
   type: NodePort
