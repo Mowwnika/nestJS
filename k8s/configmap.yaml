@@ -6,7 +6,7 @@ metadata:
 data:
 
   NODE_ENV: "production"
-  environmentVar: "prod"
+  environmentVar: "mounika"
   label: "production"
   PORT: "5000"
 
