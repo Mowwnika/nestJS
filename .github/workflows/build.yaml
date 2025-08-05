@@ -52,7 +52,7 @@ jobs:
           git diff
           echo ""
           echo "git commit"
-          git commit -m "update deployment yaml to pull new image"
+          git commit -am "update deployment yaml to pull new image"
           echo ""
           echo "git status"
           git status
