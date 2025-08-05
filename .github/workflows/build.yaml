@@ -1,0 +1,48 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME:  netsjs_kubernetes  
+      DEPLOY_FILE: k8s/deployment_nest.yaml
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set image tag
+        id: vars
+        run: echo "tag=sha-${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }}
+
+      - name: Update Kubernetes YAML
+        run: |
+          echo "Updating image in ${DEPLOY_FILE}..."
+          yq e '.spec.template.spec.containers[0].image = "${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }}"' -i $DEPLOY_FILE
+
+      - name: Commit updated YAML
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add $DEPLOY_FILE
+          git commit -m "chore: update deployment image to ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }}"
+          git push
