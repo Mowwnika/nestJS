@@ -39,10 +39,13 @@ jobs:
           echo "Updating image in ${DEPLOY_FILE}..."
           yq e '.spec.template.spec.containers[0].image = "${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }}"' -i $DEPLOY_FILE
 
-      - name: Commit updated YAML
+      - name: Commit and Push updated YAML
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
-          git add $DEPLOY_FILE
-          git commit -m "chore: update deployment image to ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }}"
-          git push
+          git add deploy/deployment.yaml
+          git commit -m "chore: update deployment image to ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.tag }}" || echo "No changes to commit"
+          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}
+          git push origin HEAD:${{ github.ref_name }}
