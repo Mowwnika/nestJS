@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      IMAGE_NAME:  netsjs_kubernetes  
+      IMAGE_NAME:  mowwnika/nestjs_kubernetes  
       DEPLOY_FILE: k8s/deployment_nest.yaml
 
     steps:
