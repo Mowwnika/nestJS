@@ -55,4 +55,4 @@ jobs:
           git commit -am "update deployment yaml to pull new image"
           echo ""
           echo "git push"
-          git push
+          git push https://x-access-token:${GH_TOKEN}@github.com/Mowwnika/nestJS.git HEAD:develop
