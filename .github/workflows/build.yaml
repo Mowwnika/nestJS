@@ -43,8 +43,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@users.noreply.github.com"
+          git config user.name "workflow (triggered by $(git log -n 1 --format=%ae))"
+          git config user.email "$(git log -n 1 --format=%ae)"
           echo "git status"
           git status
           echo ""
@@ -53,9 +53,6 @@ jobs:
           echo ""
           echo "git commit"
           git commit -am "update deployment yaml to pull new image"
-          echo ""
-          echo "git status"
-          git status
           echo ""
           echo "git push"
           git push
